@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Auto Print Struk</title>
+  <script src="https://qz.io/deploy/qz-tray.js"></script>
+  <style>
+    #struk {
+      font-family: monospace;
+      font-size: 12px;
+      width: 250px;
+    }
+    .title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .line {
+      border-top: 1px dashed #000;
+      margin: 5px 0;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+<div id="struk">
+  <!-- Struk akan di-generate via JS -->
+</div>
+
+<script>
+  function getParams() {
+    const params = new URLSearchParams(window.location.search);
+    const items = params.get("item")?.split(",") || [];
+    const total = params.get("total") || "0";
+    return { items, total };
+  }
+
+  function generateStrukHTML(items, total) {
+    let html = `
+      <div class="title">TOKO MAJU JAYA</div>
+      <div class="title">Jl. Contoh No.123</div>
+      <div class="line"></div>
+    `;
+
+    items.forEach(item => {
+      const [nama, qty, harga] = item.split(" ");
+      html += `<div class="item"><span>${nama} ${qty}</span><span>${harga}</span></div>`;
+    });
+
+    html += `
+      <div class="line"></div>
+      <div class="item"><strong>Total</strong><strong>${total}</strong></div>
+      <div class="title" style="margin-top: 10px;">Terima kasih!</div>
+    `;
+
+    document.getElementById("struk").innerHTML = html;
+  }
+
+  function autoPrintStruk() {
+    const htmlContent = document.getElementById("struk").outerHTML;
+
+    qz.websocket.connect().then(() => {
+      const config = qz.configs.create("POS-80");
+      const data = [{
+        type: 'html',
+        format: 'plain',
+        data: htmlContent
+      }];
+      return qz.print(config, data);
+    }).catch(err => {
+      console.error("Print gagal:", err);
+    });
+  }
+
+  window.onload = function () {
+    const { items, total } = getParams();
+    generateStrukHTML(items, total);
+    setTimeout(() => autoPrintStruk(), 100);
+  };
+</script>
+
+</body>
+</html>
