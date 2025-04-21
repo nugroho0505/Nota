@@ -4,10 +4,14 @@
   <meta charset="UTF-8">
   <title>Nota Penjualan 55mm</title>
   <style>
+    html, body {
+  margin: 0;
+  padding: 0;
+    }
     @media print {
       @page {
         size: 55mm auto;
-        margin: 5mm;
+        margin: 0;
       }
     }
 
@@ -85,7 +89,18 @@
         <th style="text-align:right">Sub Total</th>
       </tr>
     </thead>
-    <tbody id="item-list">
+    <tbody.innerHTML += `
+  <tr>
+    <td colspan="2">
+      <div style="font-weight:bold">${nama}</div>
+      <div style="font-size:8pt">${qty} x ${parseInt(harga).toLocaleString()}</div>
+    </td>
+    <td style="text-align:right; vertical-align:top">
+      ${subtotal.toLocaleString()}
+    </td>
+  </tr>
+`;>
+
       <!-- Diisi lewat JS -->
     </tbody>
     <tfoot>
