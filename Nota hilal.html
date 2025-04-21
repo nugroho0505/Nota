@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Nota Penjualan 55mm</title>
+  <style>
+    @media print {
+      @page {
+        size: 55mm auto;
+        margin: 5mm;
+      }
+    }
+
+    body {
+      font-family: monospace;
+      width: 55mm;
+      margin: 0 auto;
+      padding: 0;
+      font-size: 10pt;
+    }
+
+    h2, h4 {
+      text-align: center;
+      margin: 0;
+    }
+
+    p {
+      margin: 4px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 5px;
+    }
+
+    th, td {
+      padding: 2px 0;
+      text-align: left;
+      font-size: 9pt;
+    }
+
+    tfoot td {
+      border-top: 1px dashed #000;
+      font-weight: bold;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .divider {
+      border-top: 1px solid #000;
+      margin: 4px 0;
+    }
+
+    .print-btn {
+      display: none;
+    }
+
+    @media screen {
+      .print-btn {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>TOKO ABC</h2>
+  <h4>Jl. Contoh No.123</h4>
+  <div class="center">Telp: 08123456789</div>
+  <div class="divider"></div>
+
+  <p>Tanggal: 19/04/2025</p>
+  <p>Pelanggan: John Doe</p>
+  <div class="divider"></div>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">Description</th>
+        <th style="text-align:right">Sub Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="2">Produk A</td>
+        <td rowspan="2" style="text-align:right">2.000</td>
+        </tr><tr>
+        <td>2 x 4.000</td>
+      </tr>
+<tr>
+        <td colspan="2">Produk B</td>
+        <td rowspan="2" style="text-align:right">16.000</td>
+        </tr><tr>
+        <td>4 x 4.000</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2" style="text-align:right">Total</td>
+        <td style="text-align:right">175.000</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <hr>
+  <div class="center">Terima kasih!</div>
+
+</body>
+</html>
