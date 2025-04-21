@@ -81,7 +81,7 @@
   <table>
     <thead>
       <tr>
-        <th colspan="3">Description</th>
+        <th>Description</th>
         <th style="text-align:right">Sub Total</th>
       </tr>
     </thead>
@@ -90,7 +90,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="2" style="text-align:right">Total</td>
+        <td style="text-align:right">Total</td>
         <td style="text-align:right" id="total"></td>
       </tr>
     </tfoot>
@@ -122,14 +122,14 @@
         // Row 1: Nama Produk + Subtotal
         const row1 = document.createElement("tr");
         row1.innerHTML = `
-          <td colspan="2">${nama}</td>
+          <td>${nama}</td>
           <td rowspan="2" style="text-align:right">${subtotal.toLocaleString()}</td>
         `;
         itemList.appendChild(row1);
 
         // Row 2: Qty x Harga
         const row2 = document.createElement("tr");
-        row2.innerHTML = `<td colspan="2">${qty} x ${parseInt(harga).toLocaleString()}</td>`;
+        row2.innerHTML = `<td>${qty} x ${parseInt(harga).toLocaleString()}</td>`;
         itemList.appendChild(row2);
       });
     }
