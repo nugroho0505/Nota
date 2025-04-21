@@ -114,41 +114,44 @@
   <hr>
   <div class="center">Terima kasih!</div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
+<script>
+  const params = new URLSearchParams(window.location.search);
 
-    // Set tanggal & pelanggan
-    document.getElementById("tanggal").textContent = "Tanggal: " + (params.get("tanggal") || "-");
-    document.getElementById("pelanggan").textContent = "Pelanggan: " + (params.get("pelanggan") || "-");
+  // Ambil parameter
+  const tanggal = params.get("tanggal") || "";
+  const pelanggan = params.get("pelanggan") || "";
+  const items = params.get("items") || "";
+  const total = params.get("total") || "0";
 
-    // Set total
-    document.getElementById("total").textContent = parseInt(params.get("total") || 0).toLocaleString();
+  // Isi tanggal dan pelanggan
+  document.body.innerHTML = document.body.innerHTML.replace("{{tanggal}}", tanggal);
+  document.body.innerHTML = document.body.innerHTML.replace("{{pelanggan}}", pelanggan);
+  document.getElementById("total").innerText = parseInt(total).toLocaleString();
 
-    // Loop items
-    const itemsRaw = params.get("items");
-    const itemList = document.getElementById("item-list");
+  // Isi tabel item
+  const tbody = document.querySelector("tbody");
 
-    if (itemsRaw) {
-      const items = itemsRaw.split(",");
-      items.forEach(itemStr => {
-        const [nama, qty, harga] = itemStr.split("|");
-        const subtotal = parseInt(qty) * parseInt(harga);
+  if (items) {
+    const data = items.split(",");
+    data.forEach(item => {
+      const [nama, qty, harga] = item.split("|");
+      const subtotal = parseInt(qty) * parseInt(harga);
 
-        // Row 1: Nama Produk + Subtotal
-        const row1 = document.createElement("tr");
-        row1.innerHTML = `
-          <td>${nama}</td>
-          <td rowspan="2" style="text-align:right">${subtotal.toLocaleString()}</td>
-        `;
-        itemList.appendChild(row1);
+      tbody.innerHTML += `
+        <tr>
+          <td colspan="2">
+            <div style="font-weight:bold">${nama}</div>
+            <div style="font-size:8pt">${qty} x ${parseInt(harga).toLocaleString()}</div>
+          </td>
+          <td style="text-align:right; vertical-align:top">
+            ${subtotal.toLocaleString()}
+          </td>
+        </tr>
+      `;
+    });
+  }
+</script>
 
-        // Row 2: Qty x Harga
-        const row2 = document.createElement("tr");
-        row2.innerHTML = `<td>${qty} x ${parseInt(harga).toLocaleString()}</td>`;
-        itemList.appendChild(row2);
-      });
-    }
-  </script>
 
 </body>
 </html>
