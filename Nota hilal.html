@@ -69,45 +69,71 @@
 </head>
 <body>
 
-  <h2>TOKO ABC</h2>
-  <h4>Jl. Contoh No.123</h4>
-  <div class="center">Telp: 08123456789</div>
-  <div class="divider"></div>
+    <h2>TOKO ABC</h2>
+  <h4>Jl. Contoh No.123</h4>
+  <div class="center">Telp: 08123456789</div>
+  <div class="divider"></div>
 
-  <p>Tanggal: 19/04/2025</p>
-  <p>Pelanggan: John Doe</p>
-  <div class="divider"></div>
-  <table>
-    <thead>
-      <tr>
-        <th colspan="2">Description</th>
-        <th style="text-align:right">Sub Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td colspan="2">Produk A</td>
-        <td rowspan="2" style="text-align:right">2.000</td>
-        </tr><tr>
-        <td>2 x 4.000</td>
-      </tr>
-<tr>
-        <td colspan="2">Produk B</td>
-        <td rowspan="2" style="text-align:right">16.000</td>
-        </tr><tr>
-        <td>4 x 4.000</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="2" style="text-align:right">Total</td>
-        <td style="text-align:right">175.000</td>
-      </tr>
-    </tfoot>
-  </table>
+  <p id="tanggal"></p>
+  <p id="pelanggan"></p>
+  <div class="divider"></div>
 
-  <hr>
-  <div class="center">Terima kasih!</div>
+  <table>
+    <thead>
+      <tr>
+        <th colspan="2">Description</th>
+        <th style="text-align:right">Sub Total</th>
+      </tr>
+    </thead>
+    <tbody id="item-list">
+      <!-- Diisi lewat JS -->
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2" style="text-align:right">Total</td>
+        <td style="text-align:right" id="total"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <hr>
+  <div class="center">Terima kasih!</div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    // Set tanggal & pelanggan
+    document.getElementById("tanggal").textContent = "Tanggal: " + (params.get("tanggal") || "-");
+    document.getElementById("pelanggan").textContent = "Pelanggan: " + (params.get("pelanggan") || "-");
+
+    // Set total
+    document.getElementById("total").textContent = parseInt(params.get("total") || 0).toLocaleString();
+
+    // Loop items
+    const itemsRaw = params.get("items");
+    const itemList = document.getElementById("item-list");
+
+    if (itemsRaw) {
+      const items = itemsRaw.split(",");
+      items.forEach(itemStr => {
+        const [nama, qty, harga] = itemStr.split("|");
+        const subtotal = parseInt(qty) * parseInt(harga);
+
+        // Row 1: Nama Produk + Subtotal
+        const row1 = document.createElement("tr");
+        row1.innerHTML = `
+          <td colspan="2">${nama}</td>
+          <td rowspan="2" style="text-align:right">${subtotal.toLocaleString()}</td>
+        `;
+        itemList.appendChild(row1);
+
+        // Row 2: Qty x Harga
+        const row2 = document.createElement("tr");
+        row2.innerHTML = `<td colspan="2">${qty} x ${parseInt(harga).toLocaleString()}</td>`;
+        itemList.appendChild(row2);
+      });
+    }
+  </script>
 
 </body>
 </html>
