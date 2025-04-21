@@ -55,7 +55,7 @@
 
     .divider {
       border-top: 1px solid #000;
-      margin: 4px 0;
+      margin: 2px 0;
     }
 
     .print-btn {
@@ -77,15 +77,14 @@
   <h4>Jl. Contoh No.123</h4>
   <div class="center">Telp: 08123456789</div>
   <div class="divider"></div>
-
-  <p id="tanggal"></p>
-  <p id="pelanggan"></p>
+<p>Tanggal: {{tanggal}}</p>
+<p>Pelanggan: {{pelanggan}}</p>
   <div class="divider"></div>
 
   <table>
     <thead>
       <tr>
-        <th>Description</th>
+        <th colspan="2">Description</th>
         <th style="text-align:right">Sub Total</th>
       </tr>
     </thead>
