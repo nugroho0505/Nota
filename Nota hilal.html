@@ -72,13 +72,16 @@
   </style>
 </head>
 <body>
-<table>
+  <table>
 <tr>
-  <td style="font-weight: bold ;font-size: 13pt ;text-align: center" colspan="3">TOKO ABC</Td>
+  <td style="font-weight: bold ;font-size: 13pt ;text-align: center" colspan="3">{{toko}}</Td>
   </tr>
-  <Tr><td style="font-size: 10pt ;text-align: center" colspan="3">Jl. Contoh No.123</td></tr>
+  <Tr><td style="font-size: 10pt ;text-align: center" colspan="3">{{alamat}}</td></tr>
   <tr>
-  <td style="font-size: 10pt ;text-align: center ;border-bottom: 1px solid #000" colspan="3">Telp: 08123456789</td>
+  <td style="font-size: 10pt ;text-align: center ;border-bottom: 1px solid #000" colspan="3">{{telp}}</td>
+  </tr>
+  <tr>
+    <td>No Nota :</td><td colspan="2" style="text-align: center">{{nonota}}</td>
   </tr>
 <tr>
   <td>Tanggal: </td><td colspan="2" style="text-align: center">{{tanggal}}</td></tr>
@@ -98,7 +101,7 @@
       </tr>
     </tfoot>
   </table>
-  <div class="center">Terima kasih!</div>
+  <div class="center">{{foter}}</div>
 
 <script>
   const params = new URLSearchParams(window.location.search);
@@ -108,12 +111,20 @@
   const pelanggan = params.get("pelanggan") || "";
   const items = params.get("items") || "";
   const total = params.get("total") || "0";
-
-  // Isi tanggal dan pelanggan
+  const toko = params.get("toko") ||"";
+  const alamat = params.get("alamat") || "";
+  const telp = params.get("telp") || "";
+  const nonota = params.get("nonota") || "";
+  const foter = params.get("foter")|| "";
+  // Isi templete dari parameter
   document.body.innerHTML = document.body.innerHTML.replace("{{tanggal}}", tanggal);
   document.body.innerHTML = document.body.innerHTML.replace("{{pelanggan}}", pelanggan);
   document.getElementById("total").innerText = parseInt(total).toLocaleString();
-
+document.body.innerHTML = document.body.innerHTML.replace("{{toko}}", toko);
+document.body.innerHTML = document.body.innerHTML.replace("{{alamat}}", alamat);
+document.body.innerHTML = document.body.innerHTML.replace("{{telp}}", telp);
+document.body.innerHTML = document.body.innerHTML.replace("{{nonota}}", nonota);
+document.body.innerHTML = document.body.innerHTML.replace("{{foter}}", foter);
   // Isi tabel item
   const tbody = document.querySelector("tbody");
 
@@ -143,4 +154,4 @@
 
 
 </body>
-</html>
+</html>>
